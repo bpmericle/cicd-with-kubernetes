@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nexus
+spec:
+  type: LoadBalancer
+  ports:
+  - name: nexus
+    port: 8081
+    targetPort: 8081
+  selector:
+    app: nexus
