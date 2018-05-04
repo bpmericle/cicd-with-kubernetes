@@ -14,15 +14,18 @@ spec:
     spec:
       containers:
       - name: sonarqube
-        image: sonarqube:6.7.3-alpine
+        image: sonarqube:7.1-alpine
         ports:
         - containerPort: 9000
         - containerPort: 9092
         volumeMounts:
-        - name: sonarqube-data
+        - name: sonarqube-volume
           mountPath: /opt/sonarqube/data
-          subPath: sonarqube
+          subPath: sonarqube/data
+        - name: sonarqube-volume
+          mountPath: /opt/sonarqube/extensions
+          subPath: sonarqube/extensions
       volumes:
-      - name: sonarqube-data
+      - name: sonarqube-volume
         persistentVolumeClaim:
           claimName: tool-persistent-volume-claim
