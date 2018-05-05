@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: bpmericle/jenkins-with-plugins:2.119
+        image: bpmericle/jenkins-with-plugins:2.119.3
         env:
         - name: JAVA_OPTS
           value: -Djenkins.install.runSetupWizard=false
@@ -22,10 +22,16 @@ spec:
         - containerPort: 8080
         - containerPort: 50000
         volumeMounts:
+        - name: docker-sock-volume
+          mountPath: /var/run/docker.sock
         - name: jenkins-home
           mountPath: /var/jenkins_home
           subPath: jenkins
       volumes:
+      - name: docker-sock-volume
+        hostPath:
+          path: /var/run/docker.sock
+          type: File
       - name: jenkins-home
         persistentVolumeClaim:
           claimName: tool-persistent-volume-claim
