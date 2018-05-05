@@ -18,6 +18,7 @@ spec:
         ports:
         - containerPort: 8081
         - containerPort: 18444
+        - containerPort: 18443
         volumeMounts:
         - name: nexus-data
           mountPath: /nexus-data
