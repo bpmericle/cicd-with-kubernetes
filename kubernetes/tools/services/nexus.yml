@@ -8,5 +8,8 @@ spec:
   - name: nexus
     port: 8081
     targetPort: 8081
+  - name: nexus-docker-repo-port
+    port: 18444
+    targetPort: 18444
   selector:
     app: nexus
