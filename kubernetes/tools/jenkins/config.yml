@@ -2,6 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: jenkins
+  namespace: management
 spec:
   replicas: 1
   selector:
@@ -35,3 +36,20 @@ spec:
       - name: jenkins-home
         persistentVolumeClaim:
           claimName: tool-persistent-volume-claim
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jenkins
+  namespace: management
+spec:
+  type: LoadBalancer
+  ports:
+  - name: jenkins-master
+    port: 8080
+    targetPort: 8080
+  - name: jenkins-agent
+    port: 50000
+    targetPort: 50000
+  selector:
+    app: jenkins

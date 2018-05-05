@@ -2,6 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nexus
+  namespace: management
 spec:
   replicas: 1
   selector:
@@ -17,7 +18,6 @@ spec:
         image: sonatype/nexus3:3.11.0
         ports:
         - containerPort: 8081
-        - containerPort: 18444
         - containerPort: 18443
         volumeMounts:
         - name: nexus-data
@@ -27,3 +27,20 @@ spec:
       - name: nexus-data
         persistentVolumeClaim:
           claimName: tool-persistent-volume-claim
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: nexus
+    namespace: management
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: nexus
+      port: 8081
+      targetPort: 8081
+    - name: nexus-docker-https-port
+      port: 18443
+      targetPort: 18443
+    selector:
+      app: nexus

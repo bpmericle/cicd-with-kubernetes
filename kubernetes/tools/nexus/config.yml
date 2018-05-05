@@ -1,0 +1,53 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nexus
+  namespace: management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+      - name: nexus
+        image: bradbeck/nexus-https:3.11.0
+        ports:
+        - containerPort: 8081
+        - containerPort: 8443
+        - containerPort: 18443
+        volumeMounts:
+        - name: nexus-data
+          mountPath: /nexus-data
+          subPath: nexus
+        - name: nexus-data
+          mountPath: /opt/sonatype/nexus/etc/ssl
+          subPath: nexus-ssl
+      volumes:
+      - name: nexus-data
+        persistentVolumeClaim:
+          claimName: tool-persistent-volume-claim
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: nexus
+    namespace: management
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: nexus-http-port
+      port: 8081
+      targetPort: 8081
+    - name: nexus-https-port
+      port: 8443
+      targetPort: 8443
+    - name: nexus-https-docker-port
+      port: 18443
+      targetPort: 18443
+    selector:
+      app: nexus

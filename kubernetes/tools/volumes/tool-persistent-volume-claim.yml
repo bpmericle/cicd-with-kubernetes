@@ -2,6 +2,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: tool-persistent-volume-claim
+  namespace: management
 spec:
   storageClassName: manual
   accessModes:

@@ -2,6 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: sonarqube
+  namespace: management
 spec:
   replicas: 1
   selector:
@@ -29,3 +30,20 @@ spec:
       - name: sonarqube-volume
         persistentVolumeClaim:
           claimName: tool-persistent-volume-claim
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonarqube
+  namespace: management
+spec:
+  type: LoadBalancer
+  ports:
+  - name: sonarqube-server
+    port: 9000
+    targetPort: 9000
+  - name: sonarqube-embedded-db
+    port: 9092
+    targetPort: 9092
+  selector:
+    app: sonarqube

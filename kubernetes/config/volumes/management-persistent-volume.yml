@@ -1,7 +1,8 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: host-persistent-volume
+  name: management-persistent-volume
+  namespace: management
   labels:
     type: local
 spec:
