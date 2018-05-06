@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: bpmericle/jenkins-with-plugins:2.120
+        image: bpmericle/jenkins-with-plugins:2.120.1
         env:
         - name: JAVA_OPTS
           value: -Djenkins.install.runSetupWizard=false
