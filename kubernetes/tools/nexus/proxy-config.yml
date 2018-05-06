@@ -51,3 +51,56 @@ metadata:
   name: internal-proxy-conf
   namespace: management
   selfLink: /api/v1/namespaces/management/configmaps/internal-proxy-conf
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: internal-proxy
+  namespace: management
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        proxy: internal
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.11-alpine
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
+          volumeMounts:
+            - name: internal-proxy-conf
+              mountPath: /etc/nginx/
+          env:
+            # This is a workaround to easily force a restart by incrementing the value (numbers must be quoted)
+            # NGINX needs to be restarted for configuration changes, especially DNS changes, to be detected
+            - name: RESTART_
+              value: "0"
+      volumes:
+        - name: internal-proxy-conf
+          configMap:
+            name: internal-proxy-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: internal-proxy
+  namespace: management
+spec:
+  selector:
+    proxy: internal
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+  type: ClusterIP
