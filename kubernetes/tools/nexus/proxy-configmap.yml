@@ -24,7 +24,7 @@ data:
 
         server {
             listen 80;
-            server_name nexus.crosslake.com;
+            server_name nexus.crosslaketech.com;
 
             keepalive_timeout  5 5;
             proxy_buffering    off;
