@@ -18,6 +18,7 @@ spec:
         image: sonatype/nexus3:3.11.0
         ports:
         - containerPort: 8081
+        - containerPort: 5000
         volumeMounts:
         - name: nexus-data
           mountPath: /nexus-data
@@ -35,8 +36,11 @@ spec:
   spec:
     type: LoadBalancer
     ports:
-    - name: nexus
-      port: 8081
+    - name: http
+      port: 80
       targetPort: 8081
+    - name: docker
+      port: 5000
+      targetPort: 5000
     selector:
       app: nexus
