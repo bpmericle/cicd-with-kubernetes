@@ -19,6 +19,8 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Djenkins.install.runSetupWizard=false
+        - name: NEXUS_HOSTNAME_FOR_DOCKER
+          value: nexus.crosslake.com
         ports:
         - containerPort: 8080
         - containerPort: 50000

@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - nexus.example.com
+      - nexus.crosslake.com
       secretName: nexus-tls
   rules:
-    - host: nexus.example.com
+    - host: nexus.crosslake.com
       http:
         paths:
         - path: /
