@@ -48,7 +48,7 @@ spec:
   type: LoadBalancer
   ports:
   - name: jenkins-master
-    port: 8080
+    port: 8086
     targetPort: 8080
   - name: jenkins-agent
     port: 50000
