@@ -16,6 +16,7 @@ spec:
       containers:
       - name: jenkins
         image: bpmericle/jenkins-with-plugins:2.120.2
+        #image: bpmericle/jenkins-blueocean-with-plugins:1.5.0
         env:
         - name: JAVA_OPTS
           value: -Djenkins.install.runSetupWizard=false
