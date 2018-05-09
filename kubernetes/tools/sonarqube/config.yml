@@ -29,7 +29,7 @@ spec:
       volumes:
       - name: sonarqube-volume
         persistentVolumeClaim:
-          claimName: tool-persistent-volume-claim
+          claimName: tools-persistent-volume-claim
 ---
 kind: Service
 apiVersion: v1

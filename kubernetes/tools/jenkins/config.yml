@@ -38,7 +38,7 @@ spec:
           type: File
       - name: jenkins-home
         persistentVolumeClaim:
-          claimName: tool-persistent-volume-claim
+          claimName: tools-persistent-volume-claim
 ---
 kind: Service
 apiVersion: v1
